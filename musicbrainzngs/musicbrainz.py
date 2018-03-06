@@ -711,7 +711,7 @@ def _do_mb_query(entity, id, includes=[], params={}):
 	return _mb_request(path, 'GET', auth_required, args=args)
 
 def _do_mb_search(entity, query='', fields={},
-		  limit=None, offset=None, strict=False):
+		  limit=None, offset=None, strict=False, dismax=False):
 	"""Perform a full-text search on the MusicBrainz search server.
 	`query` is a lucene query string when no fields are set,
 	but is escaped when any fields are given. `fields` is a dictionary
@@ -765,6 +765,8 @@ def _do_mb_search(entity, query='', fields={},
 		params['limit'] = str(limit)
 	if offset:
 		params['offset'] = str(offset)
+	if dismax:
+		params['dismax'] = 'true'
 
 	return _do_mb_query(entity, '', [], params)
 
@@ -901,91 +903,91 @@ def get_url_by_id(id, includes=[]):
 # Searching
 
 @_docstring_search("annotation")
-def search_annotations(query='', limit=None, offset=None, strict=False, **fields):
+def search_annotations(query='', limit=None, offset=None, strict=False, dismax=False, **fields):
     """Search for annotations and return a dict with an 'annotation-list' key.
 
     *Available search fields*: {fields}"""
-    return _do_mb_search('annotation', query, fields, limit, offset, strict)
+    return _do_mb_search('annotation', query, fields, limit, offset, strict, dismax)
 
 @_docstring_search("area")
-def search_areas(query='', limit=None, offset=None, strict=False, **fields):
+def search_areas(query='', limit=None, offset=None, strict=False, dismax=False, **fields):
     """Search for areas and return a dict with an 'area-list' key.
 
     *Available search fields*: {fields}"""
-    return _do_mb_search('area', query, fields, limit, offset, strict)
+    return _do_mb_search('area', query, fields, limit, offset, strict, dismax)
 
 @_docstring_search("artist")
-def search_artists(query='', limit=None, offset=None, strict=False, **fields):
+def search_artists(query='', limit=None, offset=None, strict=False, dismax=False, **fields):
     """Search for artists and return a dict with an 'artist-list' key.
 
     *Available search fields*: {fields}"""
-    return _do_mb_search('artist', query, fields, limit, offset, strict)
+    return _do_mb_search('artist', query, fields, limit, offset, strict, dismax)
 
 @_docstring_search("event")
-def search_events(query='', limit=None, offset=None, strict=False, **fields):
+def search_events(query='', limit=None, offset=None, strict=False, dismax=False, **fields):
     """Search for events and return a dict with an 'event-list' key.
 
     *Available search fields*: {fields}"""
-    return _do_mb_search('event', query, fields, limit, offset, strict)
+    return _do_mb_search('event', query, fields, limit, offset, strict, dismax)
 
 @_docstring_search("instrument")
-def search_instruments(query='', limit=None, offset=None, strict=False, **fields):
+def search_instruments(query='', limit=None, offset=None, strict=False, dismax=False, **fields):
     """Search for instruments and return a dict with a 'instrument-list' key.
 
     *Available search fields*: {fields}"""
-    return _do_mb_search('instrument', query, fields, limit, offset, strict)
+    return _do_mb_search('instrument', query, fields, limit, offset, strict, dismax)
 
 @_docstring_search("label")
-def search_labels(query='', limit=None, offset=None, strict=False, **fields):
+def search_labels(query='', limit=None, offset=None, strict=False, dismax=False, **fields):
     """Search for labels and return a dict with a 'label-list' key.
 
     *Available search fields*: {fields}"""
-    return _do_mb_search('label', query, fields, limit, offset, strict)
+    return _do_mb_search('label', query, fields, limit, offset, strict, dismax)
 
 @_docstring_search("place")
-def search_places(query='', limit=None, offset=None, strict=False, **fields):
+def search_places(query='', limit=None, offset=None, strict=False, dismax=False, **fields):
     """Search for places and return a dict with a 'place-list' key.
 
     *Available search fields*: {fields}"""
-    return _do_mb_search('place', query, fields, limit, offset, strict)
+    return _do_mb_search('place', query, fields, limit, offset, strict, dismax)
 
 @_docstring_search("recording")
 def search_recordings(query='', limit=None, offset=None,
-                      strict=False, **fields):
+                      strict=False, dismax=False, **fields):
     """Search for recordings and return a dict with a 'recording-list' key.
 
     *Available search fields*: {fields}"""
-    return _do_mb_search('recording', query, fields, limit, offset, strict)
+    return _do_mb_search('recording', query, fields, limit, offset, strict, dismax)
 
 @_docstring_search("release")
-def search_releases(query='', limit=None, offset=None, strict=False, **fields):
+def search_releases(query='', limit=None, offset=None, strict=False, dismax=False, **fields):
     """Search for recordings and return a dict with a 'recording-list' key.
 
     *Available search fields*: {fields}"""
-    return _do_mb_search('release', query, fields, limit, offset, strict)
+    return _do_mb_search('release', query, fields, limit, offset, strict, dismax)
 
 @_docstring_search("release-group")
 def search_release_groups(query='', limit=None, offset=None,
-			  strict=False, **fields):
+			  strict=False, dismax=False, **fields):
     """Search for release groups and return a dict
     with a 'release-group-list' key.
 
     *Available search fields*: {fields}"""
-    return _do_mb_search('release-group', query, fields, limit, offset, strict)
+    return _do_mb_search('release-group', query, fields, limit, offset, strict, dismax)
 
 @_docstring_search("series")
-def search_series(query='', limit=None, offset=None, strict=False, **fields):
+def search_series(query='', limit=None, offset=None, strict=False, dismax=False, **fields):
     """Search for series and return a dict with a 'series-list' key.
 
     *Available search fields*: {fields}"""
-    return _do_mb_search('series', query, fields, limit, offset, strict)
+    return _do_mb_search('series', query, fields, limit, offset, strict, dismax)
 
 @_docstring_search("work")
-def search_works(query='', limit=None, offset=None, strict=False, **fields):
+def search_works(query='', limit=None, offset=None, strict=False, dismax=False, **fields):
     """Search for works and return a dict with a 'work-list' key.
 
     *Available search fields*: {fields}"""
-    return _do_mb_search('work', query, fields, limit, offset, strict)
+    return _do_mb_search('work', query, fields, limit, offset, strict, dismax)
 
 
 # Lists of entities
